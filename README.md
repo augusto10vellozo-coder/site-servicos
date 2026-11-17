@@ -3,6 +3,10 @@
 Landing page de venda de serviços de desenvolvimento web. HTML e CSS puros, sem framework,
 sem build e sem dependência externa.
 
+**No ar:** [augusto10vellozo-coder.github.io/site-servicos](https://augusto10vellozo-coder.github.io/site-servicos/)
+
+[![Página inicial do site de serviços](docs/preview.jpg)](https://augusto10vellozo-coder.github.io/site-servicos/)
+
 ## Arquivos
 
 ```
@@ -14,27 +18,15 @@ logo.svg        → versão completa com nome e assinatura
 
 Para abrir: duplo clique no `index.html`.
 
-## Publicar no GitHub Pages
+## No ar
 
-1. Crie um repositório público em https://github.com/new (nome sugerido: `site-servicos`).
-   Não marque README, .gitignore nem license.
-2. No VS Code, abra a pasta com os dois arquivos e rode:
-   ```bash
-   git init
-   git add .
-   git commit -m "Landing page de serviços"
-   git branch -M main
-   git remote add origin https://github.com/SEU-USUARIO/site-servicos.git
-   git push -u origin main
-   ```
-3. No GitHub: **Settings → Pages → Deploy from a branch → main / (root) → Save**
-4. Em cerca de 1 minuto o site fica no ar em:
-   ```
-   https://augusto10vellozo-coder.github.io/site-servicos/
-   ```
+O site é publicado pelo GitHub Pages a partir da branch `main`:
 
-> Se quiser o endereço curto `augusto10vellozo-coder.github.io`, o repositório precisa se chamar
-> exatamente `augusto10vellozo-coder.github.io`.
+```
+https://augusto10vellozo-coder.github.io/site-servicos/
+```
+
+Para atualizar, edite os arquivos, faça commit e push. O Pages publica sozinho em 1–2 minutos.
 
 ## O que editar primeiro
 
