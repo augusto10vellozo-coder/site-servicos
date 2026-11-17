@@ -1,5 +1,7 @@
 # Site de serviços — Cezar Vellozo
 
+![Lighthouse](https://img.shields.io/badge/Lighthouse-100%2F100%2F100-2ea44f?style=flat-square)
+
 Landing page de venda de serviços de desenvolvimento web. HTML e CSS puros, sem framework,
 sem build e sem dependência externa.
 
