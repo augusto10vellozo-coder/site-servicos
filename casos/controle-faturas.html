@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Case — Controle de faturas de energia | Cezar Vellozo</title>
+  <meta name="description" content="Case de automação interna: leitura de PDFs, conferência de emissão e economia solar em um painel offline de controle de faturas de energia.">
+  <meta name="theme-color" content="#f7f5f1">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Case — Controle de faturas de energia">
+  <meta property="og:description" content="Como um painel offline substituiu a conferência manual de faturas de energia.">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:image" content="img/painel-faturas.jpg">
+
+  <link rel="icon" href="../logo-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+
+  <style>
+    .case-hero {
+      background: var(--escuro);
+      color: #fff;
+      padding: clamp(48px, 8vw, 85px) 0 clamp(42px, 6vw, 64px);
+    }
+    .case-hero .olho { color: rgba(255, 255, 255, .55); }
+    .case-hero h1 {
+      font-size: clamp(34px, 5.4vw, 58px);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+      max-width: 900px;
+      margin: 14px 0 0;
+    }
+    .case-hero h1 em { font-style: normal; color: #f08a63; }
+    .case-hero p {
+      max-width: 660px;
+      margin: 20px 0 0;
+      color: rgba(255, 255, 255, .68);
+      font-size: clamp(16px, 1.6vw, 19px);
+    }
+    .case-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 18px;
+      margin-top: 38px;
+    }
+    .case-meta div { border-top: 1px solid rgba(255, 255, 255, .18); padding-top: 12px; }
+    .case-meta dt {
+      font-size: 10.5px;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: rgba(255, 255, 255, .5);
+      font-weight: 700;
+    }
+    .case-meta dd { margin: 6px 0 0; font-size: 14px; color: rgba(255, 255, 255, .9); }
+
+    .case-corpo { padding: clamp(42px, 7vw, 76px) 0; }
+    .case-corpo h2 {
+      font-size: clamp(24px, 3vw, 34px);
+      letter-spacing: -.025em;
+      margin: 48px 0 12px;
+    }
+    .case-corpo h2:first-child { margin-top: 0; }
+    .case-corpo p, .case-corpo li { color: var(--tinta-suave); font-size: 16.5px; line-height: 1.7; }
+    .case-corpo strong { color: var(--tinta); }
+    .case-corpo ul { padding-left: 22px; display: grid; gap: 8px; }
+
+    .case-grade {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin: 24px 0 8px;
+    }
+    .case-card {
+      background: var(--superficie);
+      border: 1px solid var(--linha);
+      border-radius: var(--raio);
+      padding: 20px;
+    }
+    .case-card h3 { margin: 0 0 6px; font-size: 15.5px; }
+    .case-card p { margin: 0; font-size: 14px; color: var(--tinta-suave); }
+
+    .case-pipeline {
+      background: var(--escuro);
+      color: #e8e6df;
+      border-radius: var(--raio);
+      padding: 24px;
+      overflow-x: auto;
+      font-size: 13.5px;
+      line-height: 1.85;
+      margin: 22px 0 8px;
+    }
+    .case-pipeline code { color: #f0b79f; }
+
+    .case-shots { display: grid; gap: 18px; margin: 24px 0 8px; }
+    .case-shot {
+      border: 1px solid var(--linha);
+      border-radius: var(--raio);
+      overflow: hidden;
+      background: var(--superficie);
+      box-shadow: var(--sombra);
+    }
+    .case-shot img { display: block; width: 100%; height: auto; }
+    .case-shot figcaption {
+      font-size: 12.5px;
+      color: var(--tinta-suave);
+      padding: 10px 14px;
+      border-top: 1px solid var(--linha);
+    }
+
+    .case-nota {
+      margin-top: 38px;
+      border-left: 3px solid var(--destaque);
+      padding: 4px 0 4px 18px;
+      color: var(--tinta-suave);
+      font-size: 14.5px;
+    }
+    .case-voltar { margin-top: 42px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .case-voltar .botao--secundario {
+      background: transparent;
+      color: var(--tinta);
+      border: 1px solid var(--linha);
+    }
+
+    @media (max-width: 760px) {
+      .case-meta { gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="cabecalho">
+    <div class="container cabecalho__linha">
+      <a class="marca" href="../index.html" aria-label="Voltar ao site">
+        <img class="marca__logo" src="../logo-mark.svg" alt="" width="38" height="38">
+        <span class="marca__texto">
+          Cezar Vellozo
+          <small>sites e sistemas web</small>
+        </span>
+      </a>
+      <nav class="menu" aria-label="Navegação">
+        <a href="../index.html#projetos">Projetos</a>
+        <a href="../index.html#servicos">Serviços</a>
+        <a class="botao botao--pequeno"
+           href="https://wa.me/5554994535730?text=Ol%C3%A1%2C%20Cezar!%20Quero%20um%20or%C3%A7amento."
+           target="_blank" rel="noopener">Orçamento</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="case-hero">
+      <div class="container">
+        <p class="olho">Case · automação interna</p>
+        <h1>Faturas de energia conferidas <em>sem planilha manual</em>.</h1>
+        <p>
+          Um painel offline que lê os PDFs das distribuidoras, confere o que foi emitido,
+          sinaliza cobranças fora do padrão e estima a economia de uma usina solar.
+        </p>
+
+        <dl class="case-meta">
+          <div><dt>Contexto</dt><dd>Gestão de energia em múltiplas unidades</dd></div>
+          <div><dt>Papel</dt><dd>Desenvolvimento e automação</dd></div>
+          <div><dt>Stack</dt><dd>Node.js · PDF · OCR · HTML offline</dd></div>
+          <div><dt>Status</dt><dd>Uso interno · código privado</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <section class="case-corpo">
+      <div class="container container--estreito">
+
+        <h2>O problema</h2>
+        <p>
+          A conferência era manual: baixar dezenas de PDFs por mês, abrir um por um, lançar valor,
+          consumo e vencimento em planilha e comparar com o que a distribuidora dizia ter emitido.
+          Qualquer fatura faltando só aparecia quando a conta atrasava.
+        </p>
+        <p>
+          Além disso, a decisão sobre a usina solar dependia de cruzar consumo, compensação e tarifa
+          em outra aba — longe do lugar onde a fatura era lida.
+        </p>
+
+        <h2>O que o sistema faz</h2>
+        <div class="case-grade">
+          <article class="case-card">
+            <h3>Lê os PDFs</h3>
+            <p>Extrai valor, consumo, vencimento e unidade consumidora; usa OCR quando o PDF é digitalizado.</p>
+          </article>
+          <article class="case-card">
+            <h3>Confere a emissão</h3>
+            <p>Compara o que foi emitido com o que foi entregue e aponta fatura ausente por unidade e mês.</p>
+          </article>
+          <article class="case-card">
+            <h3>Sinaliza risco</h3>
+            <p>Demanda excedida, juros, encargos e bandeira fora do padrão viram prioridade no painel.</p>
+          </article>
+          <article class="case-card">
+            <h3>Estima o solar</h3>
+            <p>Cruza consumo e compensação para mostrar a economia potencial de cada unidade.</p>
+          </article>
+        </div>
+
+        <h2>Como o fluxo funciona</h2>
+        <div class="case-pipeline">
+          PDFs do mês  ─►  extração (texto ou OCR)  ─►  normalização<br>
+          portal da distribuidora  ─►  conferência de emissão  ─►  base única<br>
+          planilhas de cadastro e geração  ─►  cálculo solar  ─►  <code>painel HTML offline</code>
+        </div>
+        <p>
+          O painel é um arquivo HTML que abre com duplo clique, sem servidor e sem internet.
+          A rotina diária só exige rodar um comando: o restante é automático.
+        </p>
+
+        <h2>Decisões técnicas</h2>
+        <ul>
+          <li><strong>Offline por padrão.</strong> Os dados ficam na máquina; nada é enviado para nuvem.</li>
+          <li><strong>OCR como fallback.</strong> PDF nativo é lido por coordenadas; digitalizado passa por OCR e é marcado para revisão.</li>
+          <li><strong>Regra separada de relatório.</strong> A conferência não conhece layout nem cliente, então o mesmo motor serve para outra distribuidora.</li>
+          <li><strong>Dados fictícios na demonstração.</strong> O repositório público de exemplo usa 52 faturas e 13 unidades inventadas.</li>
+        </ul>
+
+        <h2>O painel</h2>
+        <div class="case-shots">
+          <figure class="case-shot">
+            <img src="img/painel-faturas.jpg" alt="Painel de controle de faturas com valor total, faturas entregues, pendentes e prioridades do mês" loading="lazy">
+            <figcaption>Visão geral: valor do mês, entregas, pendências e prioridades por unidade.</figcaption>
+          </figure>
+          <figure class="case-shot">
+            <img src="img/painel-solar.jpg" alt="Tela de economia solar com consumo, compensação e estimativa por unidade" loading="lazy">
+            <figcaption>Economia solar: consumo, compensação e potencial por unidade consumidora.</figcaption>
+          </figure>
+        </div>
+
+        <p class="case-nota">
+          O código é privado porque lida com a operação de energia de uma empresa. As capturas usam
+          dados fictícios. Uma demonstração guiada pode ser feita sob solicitação.
+        </p>
+
+        <div class="case-voltar">
+          <a class="botao botao--grande" href="../index.html#projetos">Ver outros projetos</a>
+          <a class="botao botao--grande botao--secundario"
+             href="https://wa.me/5554994535730?text=Ol%C3%A1%2C%20Cezar!%20Quero%20falar%20sobre%20automa%C3%A7%C3%A3o."
+             target="_blank" rel="noopener">Falar sobre automação</a>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="container rodape__linha">
+      <div>
+        <p class="rodape__nome">Cezar Vellozo</p>
+        <p class="rodape__texto">Desenvolvimento web · Dois Vizinhos, PR</p>
+      </div>
+      <nav class="rodape__links" aria-label="Contato">
+        <a href="https://wa.me/5554994535730" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://github.com/augusto10vellozo-coder" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/cezarvellozo/" target="_blank" rel="noopener">LinkedIn</a>
+      </nav>
+    </div>
+    <div class="container">
+      <p class="rodape__nota">© <span id="ano">2026</span> Cezar Vellozo. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('ano').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

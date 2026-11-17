@@ -14,9 +14,16 @@ index.html      → estrutura e conteúdo
 styles.css      → todo o estilo (comentado por seção)
 logo-mark.svg   → símbolo (cabeçalho e favicon)
 logo.svg        → versão completa com nome e assinatura
+casos/          → case interno (controle de faturas de energia)
 ```
 
 Para abrir: duplo clique no `index.html`.
+
+## Case interno
+
+[`casos/controle-faturas.html`](casos/controle-faturas.html) apresenta a automação de faturas de
+energia: leitura de PDFs, conferência de emissão e economia solar. As capturas usam dados fictícios;
+o código do sistema é privado.
 
 ## No ar
 
