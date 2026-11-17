@@ -46,11 +46,9 @@ As três imagens da seção de projetos são carregadas dos sites que já estão
 duplicar arquivos. Se quiser tudo local, baixe as imagens para uma pasta `img/` e troque os
 `src` no `index.html`.
 
-## Checklist antes de divulgar
+## Ao editar
 
-- [ ] Abrir no celular e conferir o menu (três riscos no canto superior direito)
-- [ ] Testar todos os botões de WhatsApp — devem abrir com a mensagem pronta
-- [ ] Conferir o número no link `wa.me`
-- [ ] Testar os três links de projeto
-- [ ] Passar o mouse nos links para ver o foco do teclado (`Tab`)
-- [ ] Conferir que não há nenhum texto de exemplo sobrando
+- Confira o menu em tela pequena (três riscos no canto superior direito).
+- Os botões de WhatsApp usam a variável `numero`, no fim do `index.html`.
+- Os três links de projeto apontam para sites que já estão no ar.
+- Navegue com `Tab` para conferir o foco visível.
